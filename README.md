@@ -23,20 +23,20 @@ task of parsing a english resume.
     
 The included deep learning models that classify each line in the resume files include:
 
-* [cnn.py](keras_en_parser_and_analyzer/library/classifiers/cnn.py)
+* cnn.py
     * 1-D CNN with Word Embedding 
     * Multi-Channel CNN with categorical cross-entropy loss function
 
-* [cnn_lstm.py](keras_en_parser_and_analyzer/library/classifiers/cnn_lstm.py)
+* cnn_lstm.py
     * 1-D CNN + LSTM with Word Embedding
 
-* [lstm.py](keras_en_parser_and_analyzer/library/classifiers/lstm.py)
+* lstm.py
     * LSTM with category cross-entropy loss function
     * Bi-directional LSTM/GRU with categorical cross-entropy loss function
     
 # Usage 1: Rule-based English Resume Parser
 
-The [sample code](demo/rule_base_parser.py) below shows how to scan all the resumes (in PDF and DOCX formats) from a 
+The sample code below shows how to scan all the resumes (in PDF and DOCX formats) from a 
 [demo/data/resume_samples] folder and print out a summary from the resume parser if information extracted are available:
 
 ```python
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
 ```
 
-IMPORTANT: the parser rules are implemented in the [parser_rules.py](keras_en_parser_and_analyzer/library/utility/parser_rules.py).
+IMPORTANT: the parser rules are implemented in the parser_rules.py.
 Each of these rules will be applied to every line of text in the resume file and return the target accordingly (or
 return None if not found in a line). As these rules are very naive implementation, you may want to customize them further based on the resumes that you
 are working with.
@@ -77,9 +77,9 @@ are working with.
 
 ### Step 1: training data generation and annotation
 
-A training data generation and annotation tool is created in the [demo](demo) folder which allows 
+A training data generation and annotation tool is created in the folder which allows 
 resume deep learning training data to be generated from any pdf and docx files stored in the 
-[demo/data/resume_samples](demo/data/resume_samples) folder, To launch this tool, run the following 
+demo/data/resume_samples folder, To launch this tool, run the following 
 command from the root directory of the project:
 
 ```batch
@@ -87,11 +87,11 @@ cd demo
 python create_training_data.py
 ``` 
 
-This will parse the pdf and docx files in [demo/data/resume_samples](demo/data/resume_samples) folder
+This will parse the pdf and docx files in folder
 and for each of these file launch a Tkinter-based GUI form to user to annotate individual text line
 in the pdf or docx file (clicking the "Type: ..." and "Label: ..." buttons multiple time to select the 
 correct annotation for each line). On each form closing, the generated and annotated data will be saved
-to a text file in the [demo/data/training_data](demo/data/training_data) folder.  each line in the
+to a text file in the demo/data/training_data folder.  each line in the
 text file will have the following format
 
 ```text
@@ -115,7 +115,7 @@ cd demo
 python dl_based_parser_train.py
 ```
 
-Below is the code for [dl_based_parser_train.py](demo/dl_based_parser_train.py):
+Below is the code for dl_based_parser_train.py:
 
 ```python
 import numpy as np
@@ -151,11 +151,11 @@ if __name__ == '__main__':
 
 ```
 
-Upon completion of training, the trained models will be saved in the [demo/models/line_label](demo/models/line_label)
-and [demo/models/line_type](demo/models/line_type) folders
+Upon completion of training, the trained models will be saved in the demo/models/line_label
+and demo/models/line_type folders
 
 The default line label and line type classifier used in the deep learning ResumeParser is 
-[WordVecBidirectionalLstmSoftmax](keras_en_parser_and_analyzer/library/classifiers/lstm.py).
+WordVecBidirectionalLstmSoftmax.
 But other classifiers can be used by adding the following line, for example:
 
 ```python
@@ -172,8 +172,8 @@ classifier.line_type_classifier = WordVecCnnLstm()
 
 ### Step 3: parse resumes using trained parser
 
-After the trained models are saved in the [demo/models](demo/models) folder,
-one can use the resume parser to parse the resumes in the [demo/data/resume_samples](demo/data/resume_samples)
+After the trained models are saved in the demo/models folder,
+one can use the resume parser to parse the resumes in the demo/data/resume_samples
 by running the following command:
 
 ```bash
@@ -181,7 +181,7 @@ cd demo
 python dl_based_parser_predict.py
 ```
 
-Below is the code for [dl_based_parser_predict.py](demo/dl_based_parser_predict.py):
+Below is the code for dl_based_parser_predict.py:
 
 ```python
 import os
@@ -222,3 +222,12 @@ if __name__ == '__main__':
     main()
 
 ```
+
+# Configure to run on GPU on Windows
+
+* Step 1: Change tensorflow to tensorflow-gpu in requirements.txt and install tensorflow-gpu
+* Step 2: Download and install the [CUDA® Toolkit 9.0](https://developer.nvidia.com/cuda-90-download-archive) (Please note that
+currently CUDA® Toolkit 9.1 is not yet supported by tensorflow, therefore you should download CUDA® Toolkit 9.0)
+* Step 3: Download and unzip the [cuDNN 7.4 for CUDA@ Toolkit 9.0](https://developer.nvidia.com/cudnn) and add the
+bin folder of the unzipped directory to the $PATH of your Windows environment 
+
