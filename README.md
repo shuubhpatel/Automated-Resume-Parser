@@ -1,3 +1,5 @@
+# Automated Resume Parser
+
 Deep learning project that parses and analyze english resumes.
 
 The objective of this project is to use Keras and Deep Learning such as CNN and recurrent neural network to automate the
