@@ -1,4 +1,4 @@
-# keras-english-resume-parser-and-analyzer
+# Automated Resume Parser
 
 Deep learning project that parses and analyze english resumes.
 
